@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Board, BoardStatus } from './boards.model';
 import { v1 as uuid } from 'uuid';
+import { CreateBoardDto } from './dto/create-board.dto';
 // uuid 중 version1을 사용하는데 알아보기 쉽게 as로 uuid 앨리어싱 처리
 
 @Injectable()
@@ -10,7 +11,8 @@ export class BoardsService {
   getAllBoards(): Board[] {
     return this.boards;
   }
-  createBoard(title: string, description: string) {
+  createBoard(createBoardDto: CreateBoardDto) {
+    const { title, description } = createBoardDto;
     const board: Board = {
       // title: title,
       // description: description,
