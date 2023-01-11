@@ -27,4 +27,13 @@ export class BoardsService {
     this.boards.push(board);
     return board;
   }
+
+  getBoardbyId(id: string): Board {
+    return this.boards.find((board) => board.id === id);
+  }
+
+  deleteBoard(id: string): void {
+    this.boards = this.boards.filter((board) => board.id !== id);
+  }
+  // return 값을 주지 않을 것이라 void 타입을 할당
 }
