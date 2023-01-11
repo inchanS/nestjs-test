@@ -36,4 +36,10 @@ export class BoardsService {
     this.boards = this.boards.filter((board) => board.id !== id);
   }
   // return 값을 주지 않을 것이라 void 타입을 할당
+
+  updateBoardStatus(id: string, status: BoardStatus): Board {
+    const board = this.getBoardbyId(id);
+    board.status = status;
+    return board;
+  }
 }
