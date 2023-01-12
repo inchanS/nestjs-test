@@ -56,6 +56,16 @@ export class BoardsService {
   //   return found;
   // }
   //
+
+  async deleteBoard(id: number): Promise<void> {
+    const result = await this.boardRepository.delete(id);
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`Can;t find Board with id ${id}`);
+    }
+    console.log(result);
+  }
+
   // deleteBoard(id: string): void {
   //   const found = this.getBoardbyId(id); // 함수 재사용
   //   this.boards = this.boards.filter((board) => board.id !== found.id);
