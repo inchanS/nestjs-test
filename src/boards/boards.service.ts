@@ -9,9 +9,10 @@ import { Board } from './board.entity';
 @Injectable()
 export class BoardsService {
   constructor(private boardRepository: BoardRepository) {}
-  // getAllBoards(): Board[] {
-  //   return this.boards;
-  // }
+  async getAllBoards(): Promise<Board[]> {
+    return this.boardRepository.find();
+  }
+
   // createBoard(createBoardDto: CreateBoardDto) {
   //   const { title, description } = createBoardDto;
   //   const board: Board = {
@@ -44,19 +45,6 @@ export class BoardsService {
     return found;
   }
 
-  // getBoardbyId(id: string): Board {
-  //   const found = this.boards.find((board) => board.id === id);
-  //
-  //   if (!found) {
-  //     // throw new NotFoundException(); // 기본 값
-  //     throw new NotFoundException(`Can't find Board with id ${id}`);
-  //     // 에러메세지 삽입시
-  //   }
-  //
-  //   return found;
-  // }
-  //
-
   async deleteBoard(id: number): Promise<void> {
     const result = await this.boardRepository.delete(id);
 
@@ -66,15 +54,12 @@ export class BoardsService {
     console.log(result);
   }
 
-  // deleteBoard(id: string): void {
-  //   const found = this.getBoardbyId(id); // 함수 재사용
-  //   this.boards = this.boards.filter((board) => board.id !== found.id);
-  // }
-  // // return 값을 주지 않을 것이라 void 타입을 할당
-  //
-  // updateBoardStatus(id: string, status: BoardStatus): Board {
-  //   const board = this.getBoardbyId(id);
-  //   board.status = status;
-  //   return board;
-  // }
+  async updateBoardStatus(id: number, status: BoardStatus): Promise<Board> {
+    const board = await this.getBoardById(id);
+
+    board.status = status;
+    await this.boardRepository.save(board);
+
+    return board;
+  }
 }
