@@ -3,6 +3,7 @@ import { BoardStatus } from './board-status.enum';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { BoardRepository } from './board.repository';
 import { Board } from './board.entity';
+import { User } from '../auth/user.entity';
 
 // uuid 중 version1을 사용하는데 알아보기 쉽게 as로 uuid 앨리어싱 처리
 
@@ -31,8 +32,8 @@ export class BoardsService {
   // }
   //
 
-  createBoard(createBoardDto: CreateBoardDto): Promise<Board> {
-    return this.boardRepository.createBoard(createBoardDto);
+  createBoard(createBoardDto: CreateBoardDto, user: User): Promise<Board> {
+    return this.boardRepository.createBoard(createBoardDto, user);
   }
 
   async getBoardById(id: number): Promise<Board> {
