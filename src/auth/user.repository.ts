@@ -2,6 +2,10 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CustomRepository } from '../db/typeorm-ex.decorator';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
+import {
+  ConflictException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 
 @CustomRepository(User)
 export class UserRepository extends Repository<User> {
@@ -9,6 +13,14 @@ export class UserRepository extends Repository<User> {
     const { username, password } = authCredentialsDto;
     const user = this.create({ username, password });
 
-    await this.save(user);
+    try {
+      await this.save(user);
+    } catch (error) {
+      if (error.code === 'ER_DUP_ENTRY') {
+        throw new ConflictException('Existing username');
+      } else {
+        throw new InternalServerErrorException();
+      }
+    }
   }
 }
