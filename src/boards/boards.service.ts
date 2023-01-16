@@ -10,8 +10,19 @@ import { User } from '../auth/user.entity';
 @Injectable()
 export class BoardsService {
   constructor(private boardRepository: BoardRepository) {}
-  async getAllBoards(): Promise<Board[]> {
-    return this.boardRepository.find();
+  // async getAllBoards(): Promise<Board[]> {
+  //   return this.boardRepository.find();
+  // }
+
+  async getAllBoards(user: User): Promise<Board[]> {
+    const query = this.boardRepository.createQueryBuilder('board');
+
+    query.where('board.userId = :userId', { userId: user.id });
+
+    console.log(user);
+    const boards = await query.getMany();
+
+    return boards;
   }
 
   // createBoard(createBoardDto: CreateBoardDto) {
