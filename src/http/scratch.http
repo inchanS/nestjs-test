@@ -1,0 +1,54 @@
+### GET request with a header
+GET {{url}}/boards/1
+Accept: application/json
+
+### Send POST request with json body
+PATCH {{url}}/boards/2/status
+Content-Type: application/json
+
+{
+  "status": "public"
+}
+
+### 게시글 작성
+POST {{url}}/boards
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "title": "title입니다",
+  "description": "설명입니다."
+}
+
+### 토큰을 이용해 작성한 게시물 가져오기
+GET {{url}}/boards
+Accept:application/json
+Authorization: Bearer {{auth_token}}
+
+### 토큰을 이용해 삭제하기
+DELETE {{url}}/boards/2
+Accept:application/json
+Authorization: Bearer {{auth_token}}
+
+### 회원가입
+POST {{url}}/auth/signup
+Content-Type: application/json
+
+{
+  "username": "test4",
+  "password": "abcd1234"
+}
+
+### 로그인
+POST {{url}}/auth/signin
+Content-Type: application/x-www-form-urlencoded
+
+username=test4&password=abcd1234
+
+> {%
+    client.global.set("auth_token", response.body.token);
+%}
+
+### 테스트
+POST {{url}}/auth/test
+Authorization: Bearer {{auth_token}}
