@@ -26,7 +26,7 @@ Accept:application/json
 Authorization: Bearer {{auth_token}}
 
 ### 토큰을 이용해 삭제하기
-DELETE {{url}}/boards/2
+DELETE {{url}}/boards/8
 Accept:application/json
 Authorization: Bearer {{auth_token}}
 
